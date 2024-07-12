@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MudBlazor.Services;
 
 namespace PAREMAUI
 {
@@ -20,6 +21,7 @@ namespace PAREMAUI
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddMudServices();
 
             return builder.Build();
         }
