@@ -1,23 +1,49 @@
 ﻿@inherits LayoutComponentBase
-
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+<MudLayout>
+    <MudAppBar>
+        @if (_navigationManager.Uri.Substring(_navigationManager.BaseUri.Length) != "")
+        {
+            <MudIconButton Href="back" Icon="@Icons.Material.Filled.ArrowBack" Color="Color.Inherit" Edge="Edge.Start" />
+        }
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" Anchor="Anchor.Right" Class="rounded-t-l-lg rounded-b-l-lg">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="mt-5 mb-15 pt-0 pb-8">
             @Body
-        </article>
-    </main>
-</div>
-
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
 <MudThemeProvider />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
+@code {
+    bool _drawerOpen;
+    const string RouteBack = "/back";
+    protected async override void OnInitialized()
+    {
+        // Register handler to detect "back" navigation route
+        _navigationManager.RegisterLocationChangingHandler(LocationChangingHandler);
+        StateHasChanged();
+    }
+
+    private async ValueTask LocationChangingHandler(LocationChangingContext context)
+    {
+        bool isBackRoute = context.TargetLocation.EndsWith(RouteBack, StringComparison.OrdinalIgnoreCase);
+
+        if (isBackRoute)
+        {
+            context.PreventNavigation();
+            await _jsRuntime.InvokeVoidAsync("history.back"); // Call javascript to navigate back
+        }
+    }
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
