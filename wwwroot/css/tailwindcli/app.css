@@ -1,0 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*npx tailwindcss -i ./wwwroot/css/tailwindcli/app.css -o ./wwwroot/css/tailwind.css --watch*/
