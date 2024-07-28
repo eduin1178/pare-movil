@@ -1,5 +1,8 @@
 ﻿@page "/"
-
-<h1>Hola mundo</h1>
-
-Welcome to your new app.
+@attribute [Authorize]
+<section>
+    <label class="text-lg">Bienvenido @appState.CurrentUser.FullName</label>
+</section>
+@code{
+    [Inject] AppState appState { get; set; }
+}

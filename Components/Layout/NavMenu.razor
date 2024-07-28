@@ -1,9 +1,21 @@
-﻿<MudNavMenu>
+﻿@using PAREMAUI.Providers;
+
+<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
     <MudNavLink Href="/servers" Match="NavLinkMatch.Prefix">Servers</MudNavLink>
-    <MudNavGroup Title="Settings" Expanded="true">
-        <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
+   @*  <MudNavGroup Title="Settings" Expanded="true">
+        <MudNavLink Href="/account/login" Match="NavLinkMatch.Prefix">Users</MudNavLink>
         <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
-    </MudNavGroup>
-    <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
+    </MudNavGroup> *@
+    <MudNavLink @onclick="Logout" Match="NavLinkMatch.Prefix">Log out</MudNavLink>
 </MudNavMenu>
+
+@code{
+    
+    [Inject] CustomAuthStateProvider AuthService { get; set; }
+    protected async Task Logout()
+    {
+        await AuthService.SignOut();
+        _navigationManager.NavigateTo("/account/login");
+    }
+}

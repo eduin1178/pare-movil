@@ -19,7 +19,6 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableDefaultCssItems>false</EnableDefaultCssItems>
-    <Nullable>enable</Nullable>
 
     <!-- Display name -->
     <ApplicationTitle>PAREMAUI</ApplicationTitle>
@@ -58,15 +57,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="MudBlazor" Version="7.1.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Shared\" />
+    <ProjectReference Include="..\PARE.Core\PARE.Core.csproj" />
+    <ProjectReference Include="..\PARE.Models\PARE.Models.csproj" />
+    <ProjectReference Include="..\PARE.WebApiClient\PARE.WebApiClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\Shared\RedirectToLogin.razor">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Content>
   </ItemGroup>
 
 </Project>
